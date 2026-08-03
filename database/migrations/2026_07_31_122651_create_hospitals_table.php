@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('hospitals', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('full_name');
+            $table->unsignedInteger('old');
+            $table->string('name')->index();
+            $table->string('full_name')->nullable();
+            $table->boolean('is_active')->default(true)->index();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
