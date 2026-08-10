@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('old');
             $table->string('name')->index();
-            $table->string('full_name')->nullable();
-            $table->boolean('is_active')->default(true)->index();
+            $table->string('full_name')->index()->nullable();
+            $table->boolean('is_active')->default(true);
+            $table->fullText(['name', 'full_name']);
             $table->softDeletes();
             $table->timestamps();
         });

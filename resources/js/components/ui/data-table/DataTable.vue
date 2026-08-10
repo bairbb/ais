@@ -58,11 +58,13 @@ const table = useVueTable({
 
     router.get(usePage().url, {
       page: nextState.pageIndex + 1,
+      // Магия: вытаскиваем из строки браузера текущий поиск и прикрепляем его к запросу страницы
+      search: new URLSearchParams(window.location.search).get('search') || undefined,
     }, {
       preserveState: true,
       preserveScroll: true
     })
-  },
+  }
   })
 </script>
 
