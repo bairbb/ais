@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Hospital;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class HospitalController extends Controller
 {
-    public function index() {
-        return Inertia::render('Hospitals/Index');
+    public function index(Request $request) {
+        $hospitals = Hospital::orderBy('name', 'asc')->paginate(14);
+        return Inertia::render('hospitals/Index', [
+            'hospitals' => $hospitals
+        ]);
         // $query = Hospital::query();
 
         // // Живой поиск по названию
