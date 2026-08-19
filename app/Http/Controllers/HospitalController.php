@@ -22,10 +22,10 @@ class HospitalController extends Controller
             if (!empty($booleanSearch)) {
                 $query->whereFullText(['name', 'full_name'], $booleanSearch, ['mode' => 'boolean']);
             } else {
-                $query->orderBy('name', 'asc');
+                $query->orderBy('created_at', 'desc');
             }
         } else {
-            $query->orderBy('name', 'asc');
+            $query->orderBy('created_at', 'desc');
         }
 
         $hospitals = $query->paginate(14)->withQueryString();
@@ -34,5 +34,18 @@ class HospitalController extends Controller
             'hospitals' => $hospitals,
             'filters' => $request->only(['search']),
         ]);
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request -> validate([
+            'name' => 'required|string|max:255',
+            'full_name' => 'nullable|string|max:255',
+        ]);
+        Hospital::create([
+            'name' => $validated['name'],
+            'full_name' => $validated['full_name'],
+        ]);
+        return to_route('hospitals');
     }
 }

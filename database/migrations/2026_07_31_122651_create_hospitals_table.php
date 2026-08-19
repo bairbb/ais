@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('hospitals', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('old');
+            $table->unsignedInteger('old')->nullable();
             $table->string('name')->index();
             $table->string('full_name')->index()->nullable();
             $table->boolean('is_active')->default(true);
